@@ -4,6 +4,10 @@ const thoughtController={
        Thought.find().then(function(thoughtdata){
            res.json(thoughtdata)
        })
+       .catch((err) => {
+        console.log(err);
+        res.status(500).json(err);
+        });
     },
     getThoughtbyId:function(req,res){
         Thought.find({_id:req.params._id}).then(function(thoughtdata){
