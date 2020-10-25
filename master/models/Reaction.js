@@ -1,29 +1,33 @@
-const mongoose=require("mongoose")
-const moment=require("moment")
-const Schema=mongoose.Schema
-const reactionSchema=new Schema({
+const { Schema, Types } = require('mongoose');
+const moment = require('moment');
+
+const reactionSchema = new Schema(
+  {
     reactionId: {
-        type: mongoose.Types.ObjectId,
-        default: function () { return new ObjectId()}
+      type: Schema.Types.ObjectId,
+      default: () => new Types.ObjectId(),
     },
     reactionBody: {
-        type: String, 
-        required: true, 
-        maxlength: 280
+      type: String,
+      required: true,
+      maxlength: 280,
     },
     username: {
-        type: String,
-        required: true
+      type: String,
+      required: true,
     },
     createdAt: {
-        type: Date, 
-        default: moment()
-    }
-},{
+      type: Date,
+      default: Date.now,
+      get: (timestamp) => moment(timestamp).format('MMM Do, YYYY [at] hh:mm a'),
+    },
+  },
+  {
     toJSON: {
       getters: true,
     },
     id: false,
-  })
+  }
+);
 
-module.exports=reactionSchema
+module.exports = reactionSchema;
